@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-04-2023 a las 18:18:09
+-- Tiempo de generación: 25-04-2023 a las 17:48:16
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -44,22 +44,7 @@ INSERT INTO `colores` (`Codigo`, `Color`) VALUES
 (5, 'text-bg-warning'),
 (6, 'text-bg-info'),
 (7, 'text-bg-light'),
-(8, 'text-bg-dark'),
-(9, 'Nulo');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `comentarios`
---
-
-CREATE TABLE `comentarios` (
-  `Codigo` int(11) NOT NULL,
-  `CodigoUsuario` int(11) NOT NULL,
-  `CodigoSubtarea` int(11) NOT NULL,
-  `Comentario` varchar(500) NOT NULL,
-  `Imagen` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+(8, 'text-bg-dark');
 
 -- --------------------------------------------------------
 
@@ -84,6 +69,26 @@ INSERT INTO `estados` (`Codigo`, `Estado`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `estadossubtareas`
+--
+
+CREATE TABLE `estadossubtareas` (
+  `Codigo` int(11) NOT NULL,
+  `Estado` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `estadossubtareas`
+--
+
+INSERT INTO `estadossubtareas` (`Codigo`, `Estado`) VALUES
+(1, 'Definida'),
+(2, 'En proceso'),
+(3, 'Finalizada');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `prioridades`
 --
 
@@ -99,8 +104,27 @@ CREATE TABLE `prioridades` (
 INSERT INTO `prioridades` (`Codigo`, `Prioridad`) VALUES
 (1, 'Baja'),
 (2, 'Normal'),
-(3, 'Alta'),
-(4, 'Nulo');
+(3, 'Alta');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `prioridadessubtareas`
+--
+
+CREATE TABLE `prioridadessubtareas` (
+  `Codigo` int(11) NOT NULL,
+  `Prioridad` varchar(6) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `prioridadessubtareas`
+--
+
+INSERT INTO `prioridadessubtareas` (`Codigo`, `Prioridad`) VALUES
+(1, 'Baja'),
+(2, 'Normal'),
+(3, 'Alta');
 
 -- --------------------------------------------------------
 
@@ -114,7 +138,7 @@ CREATE TABLE `subtareas` (
   `CodigoTarea` int(11) NOT NULL,
   `Descripcion` varchar(500) NOT NULL,
   `CodigoEstado` int(11) NOT NULL,
-  `CodigoPrioridad` int(11) NOT NULL,
+  `CodigoPrioridad` int(11) DEFAULT NULL,
   `FechaVencimiento` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -162,17 +186,15 @@ ALTER TABLE `colores`
   ADD PRIMARY KEY (`Codigo`);
 
 --
--- Indices de la tabla `comentarios`
---
-ALTER TABLE `comentarios`
-  ADD PRIMARY KEY (`Codigo`),
-  ADD KEY `CodigoUsuario` (`CodigoUsuario`),
-  ADD KEY `CodigoSubtarea` (`CodigoSubtarea`);
-
---
 -- Indices de la tabla `estados`
 --
 ALTER TABLE `estados`
+  ADD PRIMARY KEY (`Codigo`);
+
+--
+-- Indices de la tabla `estadossubtareas`
+--
+ALTER TABLE `estadossubtareas`
   ADD PRIMARY KEY (`Codigo`);
 
 --
@@ -182,14 +204,20 @@ ALTER TABLE `prioridades`
   ADD PRIMARY KEY (`Codigo`);
 
 --
+-- Indices de la tabla `prioridadessubtareas`
+--
+ALTER TABLE `prioridadessubtareas`
+  ADD PRIMARY KEY (`Codigo`);
+
+--
 -- Indices de la tabla `subtareas`
 --
 ALTER TABLE `subtareas`
   ADD PRIMARY KEY (`Codigo`),
-  ADD KEY `CodigoEstado` (`CodigoEstado`),
-  ADD KEY `CodigoPrioridad` (`CodigoPrioridad`),
   ADD KEY `CodigoUsuario` (`CodigoUsuario`),
-  ADD KEY `CodigoTarea` (`CodigoTarea`);
+  ADD KEY `CodigoTarea` (`CodigoTarea`),
+  ADD KEY `CodigoEstado` (`CodigoEstado`),
+  ADD KEY `CodigoPrioridad` (`CodigoPrioridad`);
 
 --
 -- Indices de la tabla `tareas`
@@ -224,30 +252,41 @@ ALTER TABLE `estados`
   MODIFY `Codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT de la tabla `estadossubtareas`
+--
+ALTER TABLE `estadossubtareas`
+  MODIFY `Codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT de la tabla `prioridades`
 --
 ALTER TABLE `prioridades`
   MODIFY `Codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- Restricciones para tablas volcadas
+-- AUTO_INCREMENT de la tabla `prioridadessubtareas`
 --
+ALTER TABLE `prioridadessubtareas`
+  MODIFY `Codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- Filtros para la tabla `comentarios`
+-- AUTO_INCREMENT de la tabla `subtareas`
 --
-ALTER TABLE `comentarios`
-  ADD CONSTRAINT `comentarios_ibfk_1` FOREIGN KEY (`CodigoUsuario`) REFERENCES `usuarios` (`Codigo`),
-  ADD CONSTRAINT `comentarios_ibfk_2` FOREIGN KEY (`CodigoSubtarea`) REFERENCES `subtareas` (`Codigo`);
+ALTER TABLE `subtareas`
+  MODIFY `Codigo` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Restricciones para tablas volcadas
+--
 
 --
 -- Filtros para la tabla `subtareas`
 --
 ALTER TABLE `subtareas`
-  ADD CONSTRAINT `subtareas_ibfk_1` FOREIGN KEY (`CodigoEstado`) REFERENCES `estados` (`Codigo`),
-  ADD CONSTRAINT `subtareas_ibfk_2` FOREIGN KEY (`CodigoPrioridad`) REFERENCES `prioridades` (`Codigo`),
-  ADD CONSTRAINT `subtareas_ibfk_3` FOREIGN KEY (`CodigoUsuario`) REFERENCES `usuarios` (`Codigo`),
-  ADD CONSTRAINT `subtareas_ibfk_4` FOREIGN KEY (`CodigoTarea`) REFERENCES `tareas` (`Codigo`);
+  ADD CONSTRAINT `subtareas_ibfk_1` FOREIGN KEY (`CodigoUsuario`) REFERENCES `usuarios` (`Codigo`),
+  ADD CONSTRAINT `subtareas_ibfk_2` FOREIGN KEY (`CodigoTarea`) REFERENCES `tareas` (`Codigo`),
+  ADD CONSTRAINT `subtareas_ibfk_3` FOREIGN KEY (`CodigoEstado`) REFERENCES `estadossubtareas` (`Codigo`),
+  ADD CONSTRAINT `subtareas_ibfk_4` FOREIGN KEY (`CodigoPrioridad`) REFERENCES `prioridadessubtareas` (`Codigo`);
 
 --
 -- Filtros para la tabla `tareas`
