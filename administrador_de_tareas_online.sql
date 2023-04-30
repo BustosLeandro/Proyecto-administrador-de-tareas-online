@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-04-2023 a las 18:09:25
--- Versión del servidor: 10.4.27-MariaDB
--- Versión de PHP: 8.2.0
+-- Tiempo de generación: 30-04-2023 a las 17:45:28
+-- Versión del servidor: 10.4.28-MariaDB
+-- Versión de PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -37,14 +37,39 @@ CREATE TABLE `colores` (
 --
 
 INSERT INTO `colores` (`Codigo`, `Color`) VALUES
-(1, 'text-bg-primary'),
-(2, 'text-bg-secondary'),
-(3, 'text-bg-success'),
-(4, 'text-bg-danger'),
-(5, 'text-bg-warning'),
-(6, 'text-bg-info'),
-(7, 'text-bg-light'),
+(1, 'table-primary'),
+(2, 'table-secondary'),
+(3, 'table-success'),
+(4, 'table-danger'),
+(5, 'table-warning'),
+(6, 'table-info'),
+(7, 'table-dark'),
 (8, 'text-bg-dark');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `coloressubtareas`
+--
+
+CREATE TABLE `coloressubtareas` (
+  `Codigo` int(11) NOT NULL,
+  `Color` varchar(17) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `coloressubtareas`
+--
+
+INSERT INTO `coloressubtareas` (`Codigo`, `Color`) VALUES
+(1, 'table-primary'),
+(2, 'table-secondary'),
+(3, 'table-success'),
+(4, 'table-danger'),
+(5, 'table-warning'),
+(6, 'table-info'),
+(7, 'table-light'),
+(8, 'table-dark');
 
 -- --------------------------------------------------------
 
@@ -56,8 +81,7 @@ CREATE TABLE `comentarios` (
   `Codigo` int(11) NOT NULL,
   `CodigoUsuario` int(11) NOT NULL,
   `CodigoSubtarea` int(11) NOT NULL,
-  `Comentario` varchar(500) NOT NULL,
-  `Imagen` varchar(100) NOT NULL
+  `Comentario` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -153,6 +177,7 @@ CREATE TABLE `subtareas` (
   `Descripcion` varchar(500) NOT NULL,
   `CodigoEstado` int(11) NOT NULL,
   `CodigoPrioridad` int(11) DEFAULT NULL,
+  `CodigoColor` int(11) NOT NULL,
   `FechaVencimiento` date DEFAULT NULL,
   `FechaCreacion` date NOT NULL DEFAULT current_timestamp(),
   `FechaAsignacion` date DEFAULT NULL
@@ -203,6 +228,12 @@ ALTER TABLE `colores`
   ADD PRIMARY KEY (`Codigo`);
 
 --
+-- Indices de la tabla `coloressubtareas`
+--
+ALTER TABLE `coloressubtareas`
+  ADD PRIMARY KEY (`Codigo`);
+
+--
 -- Indices de la tabla `comentarios`
 --
 ALTER TABLE `comentarios`
@@ -242,17 +273,18 @@ ALTER TABLE `subtareas`
   ADD KEY `CodigoUsuario` (`CodigoUsuario`),
   ADD KEY `CodigoTarea` (`CodigoTarea`),
   ADD KEY `CodigoEstado` (`CodigoEstado`),
-  ADD KEY `CodigoPrioridad` (`CodigoPrioridad`);
+  ADD KEY `CodigoPrioridad` (`CodigoPrioridad`),
+  ADD KEY `CodigoColor` (`CodigoColor`);
 
 --
 -- Indices de la tabla `tareas`
 --
 ALTER TABLE `tareas`
   ADD PRIMARY KEY (`Codigo`),
+  ADD KEY `CodigoUsuario` (`CodigoUsuario`),
   ADD KEY `CodigoPrioridad` (`CodigoPrioridad`),
   ADD KEY `CodigoEstado` (`CodigoEstado`),
-  ADD KEY `CodigoColor` (`CodigoColor`),
-  ADD KEY `CodigoUsuario` (`CodigoUsuario`);
+  ADD KEY `CodigoColor` (`CodigoColor`);
 
 --
 -- Indices de la tabla `usuarios`
@@ -269,6 +301,12 @@ ALTER TABLE `usuarios`
 --
 ALTER TABLE `colores`
   MODIFY `Codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT de la tabla `coloressubtareas`
+--
+ALTER TABLE `coloressubtareas`
+  MODIFY `Codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `comentarios`
@@ -307,6 +345,18 @@ ALTER TABLE `subtareas`
   MODIFY `Codigo` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `tareas`
+--
+ALTER TABLE `tareas`
+  MODIFY `Codigo` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  MODIFY `Codigo` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- Restricciones para tablas volcadas
 --
 
@@ -324,16 +374,17 @@ ALTER TABLE `subtareas`
   ADD CONSTRAINT `subtareas_ibfk_1` FOREIGN KEY (`CodigoUsuario`) REFERENCES `usuarios` (`Codigo`),
   ADD CONSTRAINT `subtareas_ibfk_2` FOREIGN KEY (`CodigoTarea`) REFERENCES `tareas` (`Codigo`),
   ADD CONSTRAINT `subtareas_ibfk_3` FOREIGN KEY (`CodigoEstado`) REFERENCES `estadossubtareas` (`Codigo`),
-  ADD CONSTRAINT `subtareas_ibfk_4` FOREIGN KEY (`CodigoPrioridad`) REFERENCES `prioridadessubtareas` (`Codigo`);
+  ADD CONSTRAINT `subtareas_ibfk_4` FOREIGN KEY (`CodigoPrioridad`) REFERENCES `prioridadessubtareas` (`Codigo`),
+  ADD CONSTRAINT `subtareas_ibfk_5` FOREIGN KEY (`CodigoColor`) REFERENCES `coloressubtareas` (`Codigo`);
 
 --
 -- Filtros para la tabla `tareas`
 --
 ALTER TABLE `tareas`
-  ADD CONSTRAINT `tareas_ibfk_1` FOREIGN KEY (`CodigoPrioridad`) REFERENCES `prioridades` (`Codigo`),
-  ADD CONSTRAINT `tareas_ibfk_2` FOREIGN KEY (`CodigoEstado`) REFERENCES `estados` (`Codigo`),
-  ADD CONSTRAINT `tareas_ibfk_3` FOREIGN KEY (`CodigoColor`) REFERENCES `colores` (`Codigo`),
-  ADD CONSTRAINT `tareas_ibfk_4` FOREIGN KEY (`CodigoUsuario`) REFERENCES `usuarios` (`Codigo`);
+  ADD CONSTRAINT `tareas_ibfk_1` FOREIGN KEY (`CodigoUsuario`) REFERENCES `usuarios` (`Codigo`),
+  ADD CONSTRAINT `tareas_ibfk_2` FOREIGN KEY (`CodigoPrioridad`) REFERENCES `prioridades` (`Codigo`),
+  ADD CONSTRAINT `tareas_ibfk_3` FOREIGN KEY (`CodigoEstado`) REFERENCES `estados` (`Codigo`),
+  ADD CONSTRAINT `tareas_ibfk_4` FOREIGN KEY (`CodigoColor`) REFERENCES `colores` (`Codigo`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
