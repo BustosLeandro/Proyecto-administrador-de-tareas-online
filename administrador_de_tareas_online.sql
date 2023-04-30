@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-04-2023 a las 17:45:28
+-- Tiempo de generación: 01-05-2023 a las 00:06:31
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -37,14 +37,13 @@ CREATE TABLE `colores` (
 --
 
 INSERT INTO `colores` (`Codigo`, `Color`) VALUES
-(1, 'table-primary'),
-(2, 'table-secondary'),
-(3, 'table-success'),
-(4, 'table-danger'),
-(5, 'table-warning'),
-(6, 'table-info'),
-(7, 'table-dark'),
-(8, 'text-bg-dark');
+(1, 'text-bg-primary'),
+(2, 'text-bg-secondary'),
+(3, 'text-bg-success'),
+(4, 'text-bg-danger'),
+(5, 'text-bg-warning'),
+(6, 'text-bg-info'),
+(7, 'text-bg-dark');
 
 -- --------------------------------------------------------
 
@@ -62,14 +61,13 @@ CREATE TABLE `coloressubtareas` (
 --
 
 INSERT INTO `coloressubtareas` (`Codigo`, `Color`) VALUES
-(1, 'table-primary'),
-(2, 'table-secondary'),
-(3, 'table-success'),
-(4, 'table-danger'),
-(5, 'table-warning'),
-(6, 'table-info'),
-(7, 'table-light'),
-(8, 'table-dark');
+(1, 'text-bg-primary'),
+(2, 'text-bg-secondary'),
+(3, 'text-bg-success'),
+(4, 'text-bg-danger'),
+(5, 'text-bg-warning'),
+(6, 'text-bg-info'),
+(7, 'text-bg-dark');
 
 -- --------------------------------------------------------
 
@@ -172,16 +170,27 @@ INSERT INTO `prioridadessubtareas` (`Codigo`, `Prioridad`) VALUES
 
 CREATE TABLE `subtareas` (
   `Codigo` int(11) NOT NULL,
+  `Titulo` varchar(30) NOT NULL,
   `CodigoUsuario` int(11) NOT NULL,
   `CodigoTarea` int(11) NOT NULL,
   `Descripcion` varchar(500) NOT NULL,
   `CodigoEstado` int(11) NOT NULL,
   `CodigoPrioridad` int(11) DEFAULT NULL,
-  `CodigoColor` int(11) NOT NULL,
+  `CodigoColor` int(11) DEFAULT NULL,
   `FechaVencimiento` date DEFAULT NULL,
   `FechaCreacion` date NOT NULL DEFAULT current_timestamp(),
   `FechaAsignacion` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `subtareas`
+--
+
+INSERT INTO `subtareas` (`Codigo`, `Titulo`, `CodigoUsuario`, `CodigoTarea`, `Descripcion`, `CodigoEstado`, `CodigoPrioridad`, `CodigoColor`, `FechaVencimiento`, `FechaCreacion`, `FechaAsignacion`) VALUES
+(1, 'Esta es la segunda subtarea', 1, 1, 'Primer subtarea de la primer tarea', 1, NULL, 6, NULL, '2023-04-30', NULL),
+(5, 'Esta es la segunda subtarea', 1, 1, 'Segunda subtarea de la primer tarea', 2, 2, NULL, '2023-04-29', '2023-04-30', '2023-04-01'),
+(6, 'Tercer subtarea', 1, 3, 'asdasdfasdfasdfasdfasdf', 3, 1, NULL, NULL, '2023-04-30', NULL),
+(7, 'Cuarta subtarea', 1, 2, 'asdfasdfasdfasdf', 1, 3, NULL, NULL, '2023-04-30', NULL);
 
 -- --------------------------------------------------------
 
@@ -191,6 +200,7 @@ CREATE TABLE `subtareas` (
 
 CREATE TABLE `tareas` (
   `Codigo` int(11) NOT NULL,
+  `Titulo` varchar(30) NOT NULL,
   `CodigoUsuario` int(11) NOT NULL,
   `CodigoPrioridad` int(11) NOT NULL,
   `CodigoEstado` int(11) NOT NULL,
@@ -200,6 +210,15 @@ CREATE TABLE `tareas` (
   `FechaRecordatorio` date DEFAULT NULL,
   `FechaCreacion` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `tareas`
+--
+
+INSERT INTO `tareas` (`Codigo`, `Titulo`, `CodigoUsuario`, `CodigoPrioridad`, `CodigoEstado`, `CodigoColor`, `Descripcion`, `FechaVencimiento`, `FechaRecordatorio`, `FechaCreacion`) VALUES
+(1, 'Este es el titulo', 1, 3, 2, NULL, 'orem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\r\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\r\nquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\r\nconsequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\r\ncillum dolore eu fugiat nulla pariatur.', '2023-04-06', NULL, '2023-04-30'),
+(2, 'Esta es la segunda tarea', 1, 1, 1, 5, 'Hacer esta tarea cuando se terminen las otras', '2023-04-05', '2023-04-01', '2023-04-30'),
+(3, 'Esta es la tercer tarea', 1, 2, 3, 4, 'Tarea finalizada', '2023-04-21', NULL, '2023-04-30');
 
 -- --------------------------------------------------------
 
@@ -216,6 +235,13 @@ CREATE TABLE `usuarios` (
   `FotoPerfil` varchar(100) DEFAULT NULL,
   `FotoIcono` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `usuarios`
+--
+
+INSERT INTO `usuarios` (`Codigo`, `Nombre`, `Apellido`, `Email`, `Password`, `FotoPerfil`, `FotoIcono`) VALUES
+(1, 'Leandro', 'Bustos', 'bustosleandro27@gmail.com', '$2y$10$cZv72F/PhhGrrON.UxET4uiflEJaH71/tZVTOYnfdLZn8tLjaAKd.', NULL, NULL);
 
 --
 -- Índices para tablas volcadas
@@ -342,19 +368,19 @@ ALTER TABLE `prioridadessubtareas`
 -- AUTO_INCREMENT de la tabla `subtareas`
 --
 ALTER TABLE `subtareas`
-  MODIFY `Codigo` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `tareas`
 --
 ALTER TABLE `tareas`
-  MODIFY `Codigo` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `Codigo` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Restricciones para tablas volcadas
