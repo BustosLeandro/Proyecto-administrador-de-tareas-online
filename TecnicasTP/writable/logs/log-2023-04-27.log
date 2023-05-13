@@ -1,0 +1,19 @@
+CRITICAL - 2023-04-27 16:23:25 --> Call to undefined function form_open()
+in APPPATH\Views\Tarea.php on line 64.
+ 1 SYSTEMPATH\View\View.php(213): include()
+ 2 SYSTEMPATH\View\View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1184): CodeIgniter\View\View->render('tarea', [], true)
+ 4 APPPATH\Controllers\tarea.php(9): view('tarea')
+ 5 SYSTEMPATH\CodeIgniter.php(934): App\Controllers\Tarea->index()
+ 6 SYSTEMPATH\CodeIgniter.php(499): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Tarea))
+ 7 SYSTEMPATH\CodeIgniter.php(368): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-04-27 16:39:05 --> Invalid file: "subtarea.php"
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 33.
+ 1 SYSTEMPATH\View\View.php(201): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('subtarea.php')
+ 2 SYSTEMPATH\Common.php(1184): CodeIgniter\View\View->render('subtarea', [], true)
+ 3 APPPATH\Controllers\subtarea.php(13): view('subtarea')
+ 4 SYSTEMPATH\CodeIgniter.php(934): App\Controllers\Subtarea->index()
+ 5 SYSTEMPATH\CodeIgniter.php(499): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Subtarea))
+ 6 SYSTEMPATH\CodeIgniter.php(368): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()

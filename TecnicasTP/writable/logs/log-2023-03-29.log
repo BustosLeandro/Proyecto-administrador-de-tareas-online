@@ -1,0 +1,26 @@
+CRITICAL - 2023-03-29 17:14:42 --> syntax error, unexpected token "}", expecting ";"
+in APPPATH\Controllers\Home.php on line 10.
+ 1 SYSTEMPATH\Autoloader\Autoloader.php(289): CodeIgniter\Autoloader\Autoloader->includeFile('C:\\xampp\\htdocs\\CI-Modificado\\app\\Controllers\\Home.php')
+ 2 SYSTEMPATH\Autoloader\Autoloader.php(267): CodeIgniter\Autoloader\Autoloader->loadInNamespace('App\\Controllers\\Home')
+ 3 [internal function]: CodeIgniter\Autoloader\Autoloader->loadClass('App\\Controllers\\Home')
+ 4 SYSTEMPATH\Router\AutoRouterImproved.php(224): ReflectionClass->__construct('\\App\\Controllers\\Home')
+ 5 SYSTEMPATH\Router\AutoRouterImproved.php(175): CodeIgniter\Router\AutoRouterImproved->checkRemap()
+ 6 SYSTEMPATH\Router\Router.php(507): CodeIgniter\Router\AutoRouterImproved->getRoute('/')
+ 7 SYSTEMPATH\Router\Router.php(206): CodeIgniter\Router\Router->autoRoute('/')
+ 8 SYSTEMPATH\CodeIgniter.php(815): CodeIgniter\Router\Router->handle('/')
+ 9 SYSTEMPATH\CodeIgniter.php(449): CodeIgniter\CodeIgniter->tryToRouteIt(Object(CodeIgniter\Router\RouteCollection))
+10 SYSTEMPATH\CodeIgniter.php(368): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-03-29 17:14:51 --> syntax error, unexpected token "}", expecting ";"
+in APPPATH\Controllers\Home.php on line 10.
+ 1 SYSTEMPATH\Autoloader\Autoloader.php(289): CodeIgniter\Autoloader\Autoloader->includeFile('C:\\xampp\\htdocs\\CI-Modificado\\app\\Controllers\\Home.php')
+ 2 SYSTEMPATH\Autoloader\Autoloader.php(267): CodeIgniter\Autoloader\Autoloader->loadInNamespace('App\\Controllers\\Home')
+ 3 [internal function]: CodeIgniter\Autoloader\Autoloader->loadClass('App\\Controllers\\Home')
+ 4 SYSTEMPATH\Router\AutoRouterImproved.php(224): ReflectionClass->__construct('\\App\\Controllers\\Home')
+ 5 SYSTEMPATH\Router\AutoRouterImproved.php(175): CodeIgniter\Router\AutoRouterImproved->checkRemap()
+ 6 SYSTEMPATH\Router\Router.php(507): CodeIgniter\Router\AutoRouterImproved->getRoute('/')
+ 7 SYSTEMPATH\Router\Router.php(206): CodeIgniter\Router\Router->autoRoute('/')
+ 8 SYSTEMPATH\CodeIgniter.php(815): CodeIgniter\Router\Router->handle('/')
+ 9 SYSTEMPATH\CodeIgniter.php(449): CodeIgniter\CodeIgniter->tryToRouteIt(Object(CodeIgniter\Router\RouteCollection))
+10 SYSTEMPATH\CodeIgniter.php(368): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
