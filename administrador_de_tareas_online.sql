@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-05-2023 a las 00:06:31
+-- Tiempo de generación: 13-05-2023 a las 20:50:23
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -29,21 +29,22 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `colores` (
   `Codigo` int(11) NOT NULL,
-  `Color` varchar(17) NOT NULL
+  `Color` varchar(17) NOT NULL,
+  `Valor` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `colores`
 --
 
-INSERT INTO `colores` (`Codigo`, `Color`) VALUES
-(1, 'text-bg-primary'),
-(2, 'text-bg-secondary'),
-(3, 'text-bg-success'),
-(4, 'text-bg-danger'),
-(5, 'text-bg-warning'),
-(6, 'text-bg-info'),
-(7, 'text-bg-dark');
+INSERT INTO `colores` (`Codigo`, `Color`, `Valor`) VALUES
+(1, 'Azul', 'text-bg-primary'),
+(2, 'Gris', 'text-bg-secondary'),
+(3, 'Verde', 'text-bg-success'),
+(4, 'Rojo', 'text-bg-danger'),
+(5, 'Amarillo', 'text-bg-warning'),
+(6, 'Celeste', 'text-bg-info'),
+(7, 'Negro', 'text-bg-dark');
 
 -- --------------------------------------------------------
 
@@ -53,21 +54,22 @@ INSERT INTO `colores` (`Codigo`, `Color`) VALUES
 
 CREATE TABLE `coloressubtareas` (
   `Codigo` int(11) NOT NULL,
-  `Color` varchar(17) NOT NULL
+  `Color` varchar(17) NOT NULL,
+  `Valor` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `coloressubtareas`
 --
 
-INSERT INTO `coloressubtareas` (`Codigo`, `Color`) VALUES
-(1, 'text-bg-primary'),
-(2, 'text-bg-secondary'),
-(3, 'text-bg-success'),
-(4, 'text-bg-danger'),
-(5, 'text-bg-warning'),
-(6, 'text-bg-info'),
-(7, 'text-bg-dark');
+INSERT INTO `coloressubtareas` (`Codigo`, `Color`, `Valor`) VALUES
+(1, 'Azul', 'text-bg-primary'),
+(2, 'Gris', 'text-bg-secondary'),
+(3, 'Verde', 'text-bg-success'),
+(4, 'Rojo', 'text-bg-danger'),
+(5, 'Amarillo', 'text-bg-warning'),
+(6, 'Celeste', 'text-bg-info'),
+(7, 'Negro', 'text-bg-dark');
 
 -- --------------------------------------------------------
 
@@ -138,9 +140,9 @@ CREATE TABLE `prioridades` (
 --
 
 INSERT INTO `prioridades` (`Codigo`, `Prioridad`) VALUES
+(3, 'Alta'),
 (1, 'Baja'),
-(2, 'Normal'),
-(3, 'Alta');
+(2, 'Normal');
 
 -- --------------------------------------------------------
 
@@ -158,9 +160,9 @@ CREATE TABLE `prioridadessubtareas` (
 --
 
 INSERT INTO `prioridadessubtareas` (`Codigo`, `Prioridad`) VALUES
+(3, 'Alta'),
 (1, 'Baja'),
-(2, 'Normal'),
-(3, 'Alta');
+(2, 'Normal');
 
 -- --------------------------------------------------------
 
@@ -172,6 +174,7 @@ CREATE TABLE `subtareas` (
   `Codigo` int(11) NOT NULL,
   `Titulo` varchar(30) NOT NULL,
   `CodigoUsuario` int(11) NOT NULL,
+  `CodigoColaborador` int(11) DEFAULT NULL,
   `CodigoTarea` int(11) NOT NULL,
   `Descripcion` varchar(500) NOT NULL,
   `CodigoEstado` int(11) NOT NULL,
@@ -179,18 +182,9 @@ CREATE TABLE `subtareas` (
   `CodigoColor` int(11) DEFAULT NULL,
   `FechaVencimiento` date DEFAULT NULL,
   `FechaCreacion` date NOT NULL DEFAULT current_timestamp(),
-  `FechaAsignacion` date DEFAULT NULL
+  `FechaAsignacion` date DEFAULT NULL,
+  `estaArchivada` tinyint(4) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `subtareas`
---
-
-INSERT INTO `subtareas` (`Codigo`, `Titulo`, `CodigoUsuario`, `CodigoTarea`, `Descripcion`, `CodigoEstado`, `CodigoPrioridad`, `CodigoColor`, `FechaVencimiento`, `FechaCreacion`, `FechaAsignacion`) VALUES
-(1, 'Esta es la segunda subtarea', 1, 1, 'Primer subtarea de la primer tarea', 1, NULL, 6, NULL, '2023-04-30', NULL),
-(5, 'Esta es la segunda subtarea', 1, 1, 'Segunda subtarea de la primer tarea', 2, 2, NULL, '2023-04-29', '2023-04-30', '2023-04-01'),
-(6, 'Tercer subtarea', 1, 3, 'asdasdfasdfasdfasdfasdf', 3, 1, NULL, NULL, '2023-04-30', NULL),
-(7, 'Cuarta subtarea', 1, 2, 'asdfasdfasdfasdf', 1, 3, NULL, NULL, '2023-04-30', NULL);
 
 -- --------------------------------------------------------
 
@@ -208,17 +202,9 @@ CREATE TABLE `tareas` (
   `Descripcion` varchar(500) NOT NULL,
   `FechaVencimiento` date NOT NULL,
   `FechaRecordatorio` date DEFAULT NULL,
-  `FechaCreacion` date NOT NULL DEFAULT current_timestamp()
+  `FechaCreacion` date NOT NULL DEFAULT current_timestamp(),
+  `estaArchivada` tinyint(4) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `tareas`
---
-
-INSERT INTO `tareas` (`Codigo`, `Titulo`, `CodigoUsuario`, `CodigoPrioridad`, `CodigoEstado`, `CodigoColor`, `Descripcion`, `FechaVencimiento`, `FechaRecordatorio`, `FechaCreacion`) VALUES
-(1, 'Este es el titulo', 1, 3, 2, NULL, 'orem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\r\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\r\nquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\r\nconsequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\r\ncillum dolore eu fugiat nulla pariatur.', '2023-04-06', NULL, '2023-04-30'),
-(2, 'Esta es la segunda tarea', 1, 1, 1, 5, 'Hacer esta tarea cuando se terminen las otras', '2023-04-05', '2023-04-01', '2023-04-30'),
-(3, 'Esta es la tercer tarea', 1, 2, 3, 4, 'Tarea finalizada', '2023-04-21', NULL, '2023-04-30');
 
 -- --------------------------------------------------------
 
@@ -231,17 +217,17 @@ CREATE TABLE `usuarios` (
   `Nombre` varchar(20) NOT NULL,
   `Apellido` varchar(20) NOT NULL,
   `Email` varchar(100) NOT NULL,
-  `Password` varchar(250) NOT NULL,
-  `FotoPerfil` varchar(100) DEFAULT NULL,
-  `FotoIcono` varchar(100) DEFAULT NULL
+  `Password` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`Codigo`, `Nombre`, `Apellido`, `Email`, `Password`, `FotoPerfil`, `FotoIcono`) VALUES
-(1, 'Leandro', 'Bustos', 'bustosleandro27@gmail.com', '$2y$10$cZv72F/PhhGrrON.UxET4uiflEJaH71/tZVTOYnfdLZn8tLjaAKd.', NULL, NULL);
+INSERT INTO `usuarios` (`Codigo`, `Nombre`, `Apellido`, `Email`, `Password`) VALUES
+(1, 'Leandro', 'Bustos', 'bustosleandro27@gmail.com', '$2y$10$Occb0Q0QKYTINnF7cfAdWuIfCiff8Lo.Mtyv4PE3gQjEylSZeOsrq'),
+(2, 'Juan', 'Gallego', 'JGallego@gmail.com.ar', '$2y$10$Df2P.UzuSv9/rKEZN9r.S.PI6oasPTgslMs3O6ZDjCGFusddJ3gXu'),
+(3, 'Sofia', 'Rey', 'SREY09@gmail.com.ar', '$2y$10$XujMhW4kpLTZ3ZRqnMtFfesLuwOgZEiYggCYdVSIZ2CL1zA0XMqW2');
 
 --
 -- Índices para tablas volcadas
@@ -251,13 +237,17 @@ INSERT INTO `usuarios` (`Codigo`, `Nombre`, `Apellido`, `Email`, `Password`, `Fo
 -- Indices de la tabla `colores`
 --
 ALTER TABLE `colores`
-  ADD PRIMARY KEY (`Codigo`);
+  ADD PRIMARY KEY (`Codigo`),
+  ADD UNIQUE KEY `Color` (`Color`),
+  ADD UNIQUE KEY `Valor` (`Valor`);
 
 --
 -- Indices de la tabla `coloressubtareas`
 --
 ALTER TABLE `coloressubtareas`
-  ADD PRIMARY KEY (`Codigo`);
+  ADD PRIMARY KEY (`Codigo`),
+  ADD UNIQUE KEY `Color` (`Color`),
+  ADD UNIQUE KEY `Valor` (`Valor`);
 
 --
 -- Indices de la tabla `comentarios`
@@ -265,52 +255,57 @@ ALTER TABLE `coloressubtareas`
 ALTER TABLE `comentarios`
   ADD PRIMARY KEY (`Codigo`),
   ADD KEY `CodigoUsuario` (`CodigoUsuario`),
-  ADD KEY `CodigoSubtarea` (`CodigoSubtarea`);
+  ADD KEY `comentarios_ibfk_2` (`CodigoSubtarea`);
 
 --
 -- Indices de la tabla `estados`
 --
 ALTER TABLE `estados`
-  ADD PRIMARY KEY (`Codigo`);
+  ADD PRIMARY KEY (`Codigo`),
+  ADD UNIQUE KEY `Estado` (`Estado`);
 
 --
 -- Indices de la tabla `estadossubtareas`
 --
 ALTER TABLE `estadossubtareas`
-  ADD PRIMARY KEY (`Codigo`);
+  ADD PRIMARY KEY (`Codigo`),
+  ADD UNIQUE KEY `Estado` (`Estado`);
 
 --
 -- Indices de la tabla `prioridades`
 --
 ALTER TABLE `prioridades`
-  ADD PRIMARY KEY (`Codigo`);
+  ADD PRIMARY KEY (`Codigo`),
+  ADD UNIQUE KEY `Prioridad` (`Prioridad`);
 
 --
 -- Indices de la tabla `prioridadessubtareas`
 --
 ALTER TABLE `prioridadessubtareas`
-  ADD PRIMARY KEY (`Codigo`);
+  ADD PRIMARY KEY (`Codigo`),
+  ADD UNIQUE KEY `Prioridad` (`Prioridad`);
 
 --
 -- Indices de la tabla `subtareas`
 --
 ALTER TABLE `subtareas`
   ADD PRIMARY KEY (`Codigo`),
-  ADD KEY `CodigoUsuario` (`CodigoUsuario`),
-  ADD KEY `CodigoTarea` (`CodigoTarea`),
   ADD KEY `CodigoEstado` (`CodigoEstado`),
   ADD KEY `CodigoPrioridad` (`CodigoPrioridad`),
-  ADD KEY `CodigoColor` (`CodigoColor`);
+  ADD KEY `CodigoColor` (`CodigoColor`),
+  ADD KEY `CodigoColaborador` (`CodigoColaborador`),
+  ADD KEY `CodigoUsuario` (`CodigoUsuario`),
+  ADD KEY `subtareas_ibfk_1` (`CodigoTarea`);
 
 --
 -- Indices de la tabla `tareas`
 --
 ALTER TABLE `tareas`
   ADD PRIMARY KEY (`Codigo`),
-  ADD KEY `CodigoUsuario` (`CodigoUsuario`),
   ADD KEY `CodigoPrioridad` (`CodigoPrioridad`),
   ADD KEY `CodigoEstado` (`CodigoEstado`),
-  ADD KEY `CodigoColor` (`CodigoColor`);
+  ADD KEY `CodigoColor` (`CodigoColor`),
+  ADD KEY `CodigoUsuario` (`CodigoUsuario`);
 
 --
 -- Indices de la tabla `usuarios`
@@ -326,13 +321,13 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `colores`
 --
 ALTER TABLE `colores`
-  MODIFY `Codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `Codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `coloressubtareas`
 --
 ALTER TABLE `coloressubtareas`
-  MODIFY `Codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `Codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `comentarios`
@@ -368,19 +363,19 @@ ALTER TABLE `prioridadessubtareas`
 -- AUTO_INCREMENT de la tabla `subtareas`
 --
 ALTER TABLE `subtareas`
-  MODIFY `Codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `Codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `tareas`
 --
 ALTER TABLE `tareas`
-  MODIFY `Codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `Codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `Codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `Codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Restricciones para tablas volcadas
@@ -391,22 +386,24 @@ ALTER TABLE `usuarios`
 --
 ALTER TABLE `comentarios`
   ADD CONSTRAINT `comentarios_ibfk_1` FOREIGN KEY (`CodigoUsuario`) REFERENCES `usuarios` (`Codigo`),
-  ADD CONSTRAINT `comentarios_ibfk_2` FOREIGN KEY (`CodigoSubtarea`) REFERENCES `subtareas` (`Codigo`);
+  ADD CONSTRAINT `comentarios_ibfk_2` FOREIGN KEY (`CodigoSubtarea`) REFERENCES `subtareas` (`Codigo`) ON DELETE CASCADE;
 
 --
 -- Filtros para la tabla `subtareas`
 --
 ALTER TABLE `subtareas`
-  ADD CONSTRAINT `subtareas_ibfk_1` FOREIGN KEY (`CodigoUsuario`) REFERENCES `usuarios` (`Codigo`),
-  ADD CONSTRAINT `subtareas_ibfk_2` FOREIGN KEY (`CodigoTarea`) REFERENCES `tareas` (`Codigo`),
+  ADD CONSTRAINT `subtareas_ibfk_1` FOREIGN KEY (`CodigoTarea`) REFERENCES `tareas` (`Codigo`) ON DELETE CASCADE,
   ADD CONSTRAINT `subtareas_ibfk_3` FOREIGN KEY (`CodigoEstado`) REFERENCES `estadossubtareas` (`Codigo`),
   ADD CONSTRAINT `subtareas_ibfk_4` FOREIGN KEY (`CodigoPrioridad`) REFERENCES `prioridadessubtareas` (`Codigo`),
-  ADD CONSTRAINT `subtareas_ibfk_5` FOREIGN KEY (`CodigoColor`) REFERENCES `coloressubtareas` (`Codigo`);
+  ADD CONSTRAINT `subtareas_ibfk_5` FOREIGN KEY (`CodigoColor`) REFERENCES `coloressubtareas` (`Codigo`),
+  ADD CONSTRAINT `subtareas_ibfk_6` FOREIGN KEY (`CodigoColaborador`) REFERENCES `usuarios` (`Codigo`),
+  ADD CONSTRAINT `subtareas_ibfk_7` FOREIGN KEY (`CodigoUsuario`) REFERENCES `usuarios` (`Codigo`);
 
 --
 -- Filtros para la tabla `tareas`
 --
 ALTER TABLE `tareas`
+  ADD CONSTRAINT `CodigoUsuario` FOREIGN KEY (`CodigoUsuario`) REFERENCES `usuarios` (`Codigo`) ON DELETE CASCADE,
   ADD CONSTRAINT `tareas_ibfk_1` FOREIGN KEY (`CodigoUsuario`) REFERENCES `usuarios` (`Codigo`),
   ADD CONSTRAINT `tareas_ibfk_2` FOREIGN KEY (`CodigoPrioridad`) REFERENCES `prioridades` (`Codigo`),
   ADD CONSTRAINT `tareas_ibfk_3` FOREIGN KEY (`CodigoEstado`) REFERENCES `estados` (`Codigo`),
