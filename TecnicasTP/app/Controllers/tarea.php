@@ -33,6 +33,7 @@ class Tarea extends BaseController
         }
 
         $datos = [
+            'usuario' => $sesion->get('usuario'),
             'tarea' => $tarea 
         ];
 
@@ -109,6 +110,7 @@ class Tarea extends BaseController
         $colorModel = new colorModel();
 
         $datos = [
+            'usuario' => $sesion->get('usuario'),
             'prioridades' => $prioridadModel->traerPrioridadesOrdenadas(),
             'colores' => $colorModel->traerColoresOrdenadosColor()
         ];

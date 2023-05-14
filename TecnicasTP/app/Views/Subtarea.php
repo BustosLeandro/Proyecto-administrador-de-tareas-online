@@ -229,7 +229,7 @@
                                                              <select id="responsable" name="responsable" class="form-select">
                                                                 <option selected disabled>Seleccione un responsable...</option>
                                                                 <?php foreach($usuarios as $usuario){ ?>
-                                                                    <option value="<?= $usuario['Codigo'] ?>"><?= $usuario['Apellido']." ".$usuario['Nombre'] ?></option>
+                                                                    <option value="<?= $usuario['Codigo'] ?>"><?= $usuario['Nombre']." - ".$usuario['Email'] ?></option>
                                                                 <?php } ?>
                                                             </select>
                                                             <hr class="mt-3 mb-3">

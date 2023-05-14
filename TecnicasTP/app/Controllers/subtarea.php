@@ -57,6 +57,7 @@ class Subtarea extends BaseController
         $comentarios = $comentarios->buscoPorSubtarea($codigo);
 
         $datos = [
+            'usuario' => $sesion->get('usuario'),
             'usuarios' => $usuario->findAll(),
             'subtarea' => $subtarea,
             'comentarios' => $comentarios
@@ -138,6 +139,7 @@ class Subtarea extends BaseController
         $colorSubtareaModel = new colorSubtareaModel();
 
         $datos = [
+            'usuario' => $sesion->get('usuario'),
             'prioridades' => $prioridadSubtareaModel->traerPrioridadesOrdenadas(),
             'colores' => $colorSubtareaModel->traerColoresSubtareasOrdenadosColor(),
             'codigoTarea' => $codigoTarea

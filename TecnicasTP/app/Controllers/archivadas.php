@@ -33,6 +33,7 @@ class Archivadas extends BaseController
             // *
 
             $datos = [
+                'usuario' => $sesion->get('usuario'),
                 'tareas' => $tareas,
                 'subtareas' => $subtareas,
                 'colores' => $colores,
