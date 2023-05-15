@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\subtareaModel;
+use App\Models\tareaModel;
 use App\Models\colorSubtareaModel;
 use App\Models\estadoSubtareaModel;
 use App\Models\prioridadesSubtareasModel;
@@ -98,6 +99,7 @@ class Subtarea extends BaseController
         if ($selEstado !== null){
             $estado = new estadoSubtareaModel();
             $subtarea = new subtareaModel();
+            $tareaModel = new tareaModel();
 
             //Le paso el estado y me devuelve el codigo de ese estado
             $CodigoEstado = $estado->devolverCodigo($selEstado);
@@ -106,8 +108,24 @@ class Subtarea extends BaseController
                 'CodigoEstado' => $CodigoEstado[0]['Codigo']
             ];
 
+            //Actualizo el estado de la subtarea
             $subtarea->update($codigo,$data);
+
+            //Si la subtarea pasa a finalizada
+            if($selEstado == 'Finalizada'){
+                $data = [
+                    'CodigoEstado' => 2
+                ];
+                $tarea = $tareaModel->devolverEstado($codigo);
+                //Y el estado de la tarea es definida
+                if($tarea['Estado'] == 'Definida'){
+                    //La modifico a En proceso
+                    $tareaModel->update($tarea['Codigo'],$data);
+                }
+            }
+
             return redirect()->to('subtarea/'.$codigo);
+
         }else{
             return redirect()->to('subtarea/'.$codigo);
         }

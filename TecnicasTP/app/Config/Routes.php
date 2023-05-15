@@ -48,6 +48,7 @@ $routes->post('/tarea/formPrioridad/(:num)', 'tarea::formPrioridad/$1');
 $routes->get('/tarea/crearTarea', 'tarea::crearTarea');
 $routes->post('/tarea/formTarea/', 'tarea::formTarea');
 $routes->get('/tarea/borrarTarea/(:num)', 'tarea::borrarTarea/$1');
+$routes->get('/tarea/archivar/(:num)', 'tarea::archivar/$1');
 
 $routes->get('/subtarea/(:num)', 'subtarea::index/$1');
 $routes->post('/subtarea/formColor/(:num)', 'subtarea::formColor/$1');

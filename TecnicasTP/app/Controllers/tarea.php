@@ -6,6 +6,7 @@ use App\Models\tareaModel;
 use App\Models\colorModel;
 use App\Models\estadoModel;
 use App\Models\prioridadModel;
+use App\Models\subtareaModel;
 
 class Tarea extends BaseController
 {
@@ -203,5 +204,25 @@ class Tarea extends BaseController
         $tareaModel->delete($codigo);
 
         return redirect()->to('');
+    }
+
+    public function archivar($codigo){
+        $tareaModel = new tareaModel();
+        $estaArchivada = 1;
+
+        //Archivo la tarea
+        $data = [
+            'estaArchivada' => $estaArchivada
+        ];
+
+        $tareaModel->update($codigo, $data);
+
+        //Archivo su/s subtarea/s
+        $subtareaModel = new subtareaModel();
+        foreach($subtareaModel->getCodigos($codigo) as $subtarea){
+            $subtareaModel->update($subtarea['Codigo'], $data);
+        }
+
+        return redirect()->to('archivadas');
     }
 }

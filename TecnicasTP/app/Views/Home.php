@@ -7,6 +7,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
         <link href="<?= base_url()?>estilos/estilos.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
+        <script src="<?= base_url() ?>js/home.js" defer></script>
     </head>
     <body>
         <?= view('layouts/header.php') ?>
@@ -18,6 +19,15 @@
         <div class="card">
             <div class="card-header text-center text-bg-primario">
                 Panel de tareas
+                <form action="<?= base_url() ?>" id="orderFrom"> <!-- submit en js -->
+                    <select class="form-select text-bg-primario" style="width:300px" onchange="enviar()" name="ordenar">
+                        <option selected disabled>Ordenar por...</option>
+                        <option value="1" class="text-bg-light">Prioridad</option>
+                        <option value="2" class="text-bg-light">Fecha de vencimiento más cercana</option>
+                        <option value="3" class="text-bg-light">Tareas más antiguas</option>
+                        <option value="4" class="text-bg-light">Tareas más recientes</option>
+                    </select>
+                </form>
             </div>
             <!-- Panel de tareas -->
             <table class="table card-body">

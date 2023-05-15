@@ -44,7 +44,7 @@
                                 <img src="<?= base_url() ?>imagenes/cromatico.png" class="btn-colores me-5" alt="circulo cromatico">
                             </a>                            
 
-                            <!-- Modal -->
+                            <!-- Modal - seleccionar color -->
                             <div class="modal fade" id="colorPicker" tabindex="-1" aria-labelledby="colorPickerLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
@@ -96,7 +96,7 @@
                 <div class="col-12">
                     <div class="card m-3">
                         <div class="row g-0">
-                            <div class="col-md-4">
+                            <div class="col-md-2">
                                 <!-- boton que activa el formulario para activar cambiar el estado (MODAL)-->
 
                                 <!-- Azul - Definida -->
@@ -152,8 +152,14 @@
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body">
-                                    <p class="card-text">Creado por <?= $tarea['Nombre'] ?> el día <?= date("d/m/Y", strtotime($tarea['FechaCreacion'])); ?>.</p>
+                                    <p class="card-text text-center">Creado por <?= $tarea['Nombre'] ?> el día <?= date("d/m/Y", strtotime($tarea['FechaCreacion'])); ?>.</p>
                                 </div>
+                            </div>
+                            <div class="col-md-2 d-flex justify-content-between align-items-center">
+                                <span></span>
+                                <?php if($usuario == $tarea['CodigoUsuario'] && $tarea['Estado'] == 'Finalizada' && $tarea['estaArchivada'] == 0){ ?>
+                                    <a class="btn btn-primario btn-sm me-3" href="<?=base_url()."tarea/archivar/".$tarea['Codigo']?>">Archivar</a>
+                                <?php } ?>
                             </div>
                         </div>
                     </div>

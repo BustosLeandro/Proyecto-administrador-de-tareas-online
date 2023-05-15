@@ -13,7 +13,7 @@
 
         protected $returnType     = 'array';
 
-        protected $allowedFields = ['Titulo','CodigoUsuario','CodigoTarea','Descripcion','CodigoEstado','CodigoPrioridad','CodigoColor','FechaVencimiento','FechaCreacion','FechaAsignacion'];
+        protected $allowedFields = ['Titulo','CodigoUsuario','CodigoTarea','Descripcion','CodigoEstado','CodigoPrioridad','CodigoColor','FechaVencimiento','FechaCreacion','FechaAsignacion', 'estaArchivada'];
 
         public function traerSubtareas(){
             $bd = \Config\Database::connect();
@@ -57,6 +57,14 @@
             $tarea = $tarea[0];
 
             return $tarea;
+        }
+
+        //Pasando el codigo de la tarea devuelvo el codigo de sus subtareas
+        public function getCodigos($codigoTarea){
+            $subtareaModel = new subtareaModel();
+            $codigosSubtareas = $subtareaModel->select('Codigo')->where('CodigoTarea', $codigoTarea)->findAll();
+
+            return $codigosSubtareas;
         }
     }
 ?>
